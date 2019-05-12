@@ -89,7 +89,7 @@ void Game::run() noexcept
 
 inline void Game::pickStart() noexcept
 {
-  for (int i{}; i != nodes.size(); ++i) {
+  for (size_t i{}; i != nodes.size(); ++i) {
     if (nodes[i].shape.getGlobalBounds().contains(window.mapPixelToCoords(sf::Mouse::getPosition(window)))) {
       start = &nodes[i];
       nodes[i].shape.setFillColor(sf::Color::Red);
@@ -100,7 +100,7 @@ inline void Game::pickStart() noexcept
 
 inline void Game::pickEnd() noexcept
 {
-  for (int i{}; i != nodes.size(); ++i) {
+  for (size_t i{}; i != nodes.size(); ++i) {
     if (nodes[i].shape.getGlobalBounds().contains(window.mapPixelToCoords(sf::Mouse::getPosition(window)))) {
       goal = &nodes[i];
       nodes[i].shape.setFillColor(sf::Color::Red);
@@ -122,7 +122,7 @@ inline void Game::markObstacle() noexcept
 inline void Game::findNeighbors() noexcept
 {
   for (int i{}; i != nodes.size(); ++i) {
-    int x{ i % bw }, y{ i / bh };
+    int x{ i % bw };
 
     nodes[i].adj.clear();
 
