@@ -1,4 +1,5 @@
 #include "Game.h"
+#include "Node.h"
 
 Game::Game(int w, int h, int bw, int bh, int cubeW, int cubeH) noexcept
   : window{ sf::VideoMode(w, h), "Game" }

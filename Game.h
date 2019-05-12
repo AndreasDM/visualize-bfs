@@ -5,25 +5,7 @@
 #include <string>
 #include <vector>
 #include <deque>
-
-struct node {
-  sf::RectangleShape shape;
-  std::vector<node*> adj{};
-  bool               marked   = false;
-  bool               obstacle = false;
-  node*              parent   = nullptr;
-
-  explicit node(int w, int h) noexcept
-    : shape{ { static_cast<float>(w), static_cast<float>(h) } }
-  {
-    shape.setFillColor(sf::Color::Black);
-  }
-
-  inline void setPosition(int x, int y) noexcept
-  {
-    shape.setPosition(x, y);
-  }
-};
+#include "Node.h"
 
 class Game {
 private:
