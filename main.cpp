@@ -2,7 +2,7 @@
 
 int main()
 {
-  Game game{800, 800, 25, 25, 25, 25};
+  Game game{800, 800, 25, 25, 28, 28};
 
   game.run();
 }

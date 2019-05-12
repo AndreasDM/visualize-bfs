@@ -29,6 +29,8 @@ inline void Game::update() noexcept
     search();
     fClicked = false;
 
+    if (!goal->marked) showPath = false;
+
     // prepare for next run
     // TODO: improve this
     for (auto & i : nodes) {
@@ -72,7 +74,8 @@ inline void Game::handleEvents() noexcept
   }
 }
 
-inline void Game::clear() noexcept {
+inline void Game::clear() noexcept
+{
   window.clear(sf::Color::White);
 }
 
