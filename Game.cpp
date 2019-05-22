@@ -125,10 +125,11 @@ inline void Game::markObstacle() noexcept
 inline void Game::findNeighbors() noexcept
 {
   for (int i{}; i != nodes.size(); ++i) {
-    int x{ i % bw };
+    int x{ i % bw }, y { i / bh };
 
     nodes[i].adj.clear();
 
+    // horizontal & vertical
     if (!(x - 1 < 0))
       if (!nodes[i - 1].obstacle) nodes[i].adj.push_back(&nodes[i - 1]);
     if (!(x + 1 >= bw))
@@ -137,6 +138,15 @@ inline void Game::findNeighbors() noexcept
       if (!nodes[i + bw].obstacle) nodes[i].adj.push_back(&nodes[i + bw]);
     if (!(((float(i) - bw) / bh) < 0))
       if (!nodes[i - bw].obstacle) nodes[i].adj.push_back(&nodes[i - bw]);
+
+    if (!(x - 1 < 0) && !(y - 1 < 0))     // top left
+      if (!nodes[i - bw - 1].obstacle) nodes[i].adj.push_back(&nodes[i - bw - 1]);
+    if (!(x + 1 >= bw) && !(y - 1 < 0))   // top right
+      if (!nodes[i - bw + 1].obstacle) nodes[i].adj.push_back(&nodes[i - bw + 1]);
+    if (!(x - 1 < 0) && !(y + 1 >= bh))   // bottom left
+      if (!nodes[i + bw - 1].obstacle) nodes[i].adj.push_back(&nodes[i + bw - 1]);
+    if (!(x + 1 >= bw) && !(y + 1 >= bh)) // bottom right
+      if (!nodes[i + bw + 1].obstacle) nodes[i].adj.push_back(&nodes[i + bw + 1]);
   }
 }
 
