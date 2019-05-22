@@ -134,9 +134,9 @@ inline void Game::findNeighbors() noexcept
       if (!nodes[i - 1].obstacle) nodes[i].adj.push_back(&nodes[i - 1]);
     if (!(x + 1 >= bw))
       if (!nodes[i + 1].obstacle) nodes[i].adj.push_back(&nodes[i + 1]);
-    if (!(((float(i) + bw) / bh) > bh))
+    if (!(y + 1 > bh))
       if (!nodes[i + bw].obstacle) nodes[i].adj.push_back(&nodes[i + bw]);
-    if (!(((float(i) - bw) / bh) < 0))
+    if (!(y - 1 < 0))
       if (!nodes[i - bw].obstacle) nodes[i].adj.push_back(&nodes[i - bw]);
 
     if (!(x - 1 < 0) && !(y - 1 < 0))     // top left
