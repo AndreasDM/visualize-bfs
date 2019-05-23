@@ -144,20 +144,14 @@ inline void Game::findNeighbors() noexcept
     auto const outside_left   = left   <  0;
     auto const outside_right  = right  >= bw;
 
-    if (!(outside_bottom)) addIfNotObstacle(i, i + bw);
-    if (!(outside_top))    addIfNotObstacle(i, i - bw);
-
-    if (!(outside_left)) {
-      addIfNotObstacle(i, i - 1);
-      if (!(outside_top))    addIfNotObstacle(i, i - bw - 1);
-      if (!(outside_bottom)) addIfNotObstacle(i, i + bw - 1);
-    }
-
-    if (!(outside_right)) {
-      addIfNotObstacle(i, i + 1);
-      if (!(outside_top))    addIfNotObstacle(i, i - bw + 1);
-      if (!(outside_bottom)) addIfNotObstacle(i, i + bw + 1);
-    }
+    if (!outside_bottom)                   addIfNotObstacle(i, i + bw);
+    if (!outside_top)                      addIfNotObstacle(i, i - bw);
+    if (!outside_left)                     addIfNotObstacle(i, i - 1);
+    if (!outside_right)                    addIfNotObstacle(i, i + 1);
+    if (!outside_left  && !outside_top)    addIfNotObstacle(i, i - bw - 1);
+    if (!outside_left  && !outside_bottom) addIfNotObstacle(i, i + bw - 1);
+    if (!outside_right && !outside_top)    addIfNotObstacle(i, i - bw + 1);
+    if (!outside_right && !outside_bottom) addIfNotObstacle(i, i + bw + 1);
   }
 }
 
