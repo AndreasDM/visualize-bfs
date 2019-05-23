@@ -122,6 +122,12 @@ inline void Game::markObstacle() noexcept
   }
 }
 
+inline void Game::addIfNotObstacle(int const& current_index, int const& neighbor_index) noexcept
+{
+  if (!nodes[neighbor_index].obstacle)
+    nodes[current_index].adj.push_back(&nodes[neighbor_index]);
+}
+
 inline void Game::findNeighbors() noexcept
 {
   for (int i{}; i != nodes.size(); ++i) {
@@ -129,29 +135,29 @@ inline void Game::findNeighbors() noexcept
 
     nodes[i].adj.clear();
 
-    // horizontal & vertical
-    if (!(x - 1 < 0)) {
-      if (!nodes[i - 1].obstacle) nodes[i].adj.push_back(&nodes[i - 1]); // left
+    auto const left           = x      -  1;
+    auto const right          = x      +  1;
+    auto const top            = y      -  1;
+    auto const bottom         = y      +  1;
+    auto const outside_bottom = bottom >= bh;
+    auto const outside_top    = top    <  0;
+    auto const outside_left   = left   <  0;
+    auto const outside_right  = right  >= bw;
 
-      if (!(y - 1 < 0))
-        if (!nodes[i - bw - 1].obstacle) nodes[i].adj.push_back(&nodes[i - bw - 1]); // top left
-      if (!(y + 1 >= bh))
-        if (!nodes[i + bw - 1].obstacle) nodes[i].adj.push_back(&nodes[i + bw - 1]); // bottom left
+    if (!(outside_bottom)) addIfNotObstacle(i, i + bw);
+    if (!(outside_top))    addIfNotObstacle(i, i - bw);
+
+    if (!(outside_left)) {
+      addIfNotObstacle(i, i - 1);
+      if (!(outside_top))    addIfNotObstacle(i, i - bw - 1);
+      if (!(outside_bottom)) addIfNotObstacle(i, i + bw - 1);
     }
 
-    if (!(x + 1 >= bw)) {
-      if (!nodes[i + 1].obstacle) nodes[i].adj.push_back(&nodes[i + 1]); // right
-
-      if (!(y - 1 < 0))
-        if (!nodes[i - bw + 1].obstacle) nodes[i].adj.push_back(&nodes[i - bw + 1]); // top right
-      if (!(y + 1 >= bh))
-        if (!nodes[i + bw + 1].obstacle) nodes[i].adj.push_back(&nodes[i + bw + 1]); // bottom right
+    if (!(outside_right)) {
+      addIfNotObstacle(i, i + 1);
+      if (!(outside_top))    addIfNotObstacle(i, i - bw + 1);
+      if (!(outside_bottom)) addIfNotObstacle(i, i + bw + 1);
     }
-
-    if (!(y + 1 >= bh))
-      if (!nodes[i + bw].obstacle) nodes[i].adj.push_back(&nodes[i + bw]); // top
-    if (!(y - 1 < 0))
-      if (!nodes[i - bw].obstacle) nodes[i].adj.push_back(&nodes[i - bw]); // bottom
   }
 }
 
@@ -161,7 +167,7 @@ inline void Game::search() noexcept
   queue.push_back(start);
 
   while (!queue.empty()) {
-    node* v = queue.front();
+    node* v   = queue.front();
     v->marked = true;
     queue.pop_front();
     if (v == goal) break;

@@ -38,6 +38,7 @@ private:
   void findNeighbors() noexcept;
   void search()        noexcept;
   void calculatePath() noexcept;
+  void addIfNotObstacle(int const& current_index, int const& neighbor_index) noexcept;
 
 public:
   explicit Game(int w, int h, int bw, int bh, int cubeW, int cubeH) noexcept;
