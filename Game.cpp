@@ -130,23 +130,28 @@ inline void Game::findNeighbors() noexcept
     nodes[i].adj.clear();
 
     // horizontal & vertical
-    if (!(x - 1 < 0))
-      if (!nodes[i - 1].obstacle) nodes[i].adj.push_back(&nodes[i - 1]);
-    if (!(x + 1 >= bw))
-      if (!nodes[i + 1].obstacle) nodes[i].adj.push_back(&nodes[i + 1]);
-    if (!(y + 1 > bh))
-      if (!nodes[i + bw].obstacle) nodes[i].adj.push_back(&nodes[i + bw]);
-    if (!(y - 1 < 0))
-      if (!nodes[i - bw].obstacle) nodes[i].adj.push_back(&nodes[i - bw]);
+    if (!(x - 1 < 0)) {
+      if (!nodes[i - 1].obstacle) nodes[i].adj.push_back(&nodes[i - 1]); // left
 
-    if (!(x - 1 < 0) && !(y - 1 < 0))     // top left
-      if (!nodes[i - bw - 1].obstacle) nodes[i].adj.push_back(&nodes[i - bw - 1]);
-    if (!(x + 1 >= bw) && !(y - 1 < 0))   // top right
-      if (!nodes[i - bw + 1].obstacle) nodes[i].adj.push_back(&nodes[i - bw + 1]);
-    if (!(x - 1 < 0) && !(y + 1 >= bh))   // bottom left
-      if (!nodes[i + bw - 1].obstacle) nodes[i].adj.push_back(&nodes[i + bw - 1]);
-    if (!(x + 1 >= bw) && !(y + 1 >= bh)) // bottom right
-      if (!nodes[i + bw + 1].obstacle) nodes[i].adj.push_back(&nodes[i + bw + 1]);
+      if (!(y - 1 < 0))
+        if (!nodes[i - bw - 1].obstacle) nodes[i].adj.push_back(&nodes[i - bw - 1]); // top left
+      if (!(y + 1 >= bh))
+        if (!nodes[i + bw - 1].obstacle) nodes[i].adj.push_back(&nodes[i + bw - 1]); // bottom left
+    }
+
+    if (!(x + 1 >= bw)) {
+      if (!nodes[i + 1].obstacle) nodes[i].adj.push_back(&nodes[i + 1]); // right
+
+      if (!(y - 1 < 0))
+        if (!nodes[i - bw + 1].obstacle) nodes[i].adj.push_back(&nodes[i - bw + 1]); // top right
+      if (!(y + 1 >= bh))
+        if (!nodes[i + bw + 1].obstacle) nodes[i].adj.push_back(&nodes[i + bw + 1]); // bottom right
+    }
+
+    if (!(y + 1 >= bh))
+      if (!nodes[i + bw].obstacle) nodes[i].adj.push_back(&nodes[i + bw]); // top
+    if (!(y - 1 < 0))
+      if (!nodes[i - bw].obstacle) nodes[i].adj.push_back(&nodes[i - bw]); // bottom
   }
 }
 
