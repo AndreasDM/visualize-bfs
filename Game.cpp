@@ -1,6 +1,11 @@
 #include "Game.h"
 #include "Node.h"
 
+#include <chrono>
+#include <thread>
+
+using namespace std::chrono_literals;
+
 Game::Game(int w, int h, int bw, int bh, int cubeW, int cubeH) noexcept
   : window{ sf::VideoMode(w, h), "Game" }
   , bw{bw}
@@ -171,6 +176,11 @@ inline void Game::search() noexcept
         w->marked = true;
         w->parent = v;
         queue.push_back(w);
+        w->shape.setFillColor(sf::Color::Magenta);
+        std::this_thread::sleep_for(20ms);
+        clear();
+        render();
+        display();
       }
     }
   }
