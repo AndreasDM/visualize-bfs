@@ -36,8 +36,8 @@ inline void Game::update() noexcept
 
     if (!goal->marked) showPath = false;
 
-    // prepare for next run
-    // TODO: improve this
+    // perhaps unessessary to
+    // do this here
     for (auto & i : nodes) {
       i.marked = false;
       if (i.shape.getFillColor() == sf::Color::Green)
